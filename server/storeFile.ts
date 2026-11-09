@@ -1,6 +1,5 @@
 import { writeFile, mkdir } from "node:fs/promises";
-import { dirname } from "node:path";
-import { cwd } from "node:process";
+import { dirname, join } from "node:path";
 
 export type StoreFileData = {
   path: string;
@@ -8,8 +7,8 @@ export type StoreFileData = {
   type: "file" | "json";
 };
 
-export async function storeFile(data: StoreFileData) {
-  const docPath = cwd() + "/public/" + decodeURIComponent(data.path);
+export async function storeFile(data: StoreFileData, publicDir: string) {
+  const docPath = join(publicDir, decodeURIComponent(data.path));
   const folderPath = dirname(docPath);
   try {
     let content: Blob;
